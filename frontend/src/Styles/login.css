@@ -1,0 +1,48 @@
+.container-fluid {  
+  height: 100vh;
+  background-color: #e9faff;
+}
+
+.container{
+
+background-color: white;
+width: 500px !important;
+height: 500px !important;
+
+}
+
+.form-control{
+min-width: 25vw !important;
+height:60px;
+border-radius: 0 !important;
+border-color: rgb(182, 178, 178);
+}
+
+.btn{
+height:60px;
+min-width: 25vw !important;
+
+}
+
+
+@media(max-width:1000px) {
+    
+.container{
+ 
+width: 350px !important;
+               
+}
+
+}
+
+
+@media(max-width:814px){
+
+.btn{
+
+min-width: 200px !important;
+        
+}
+
+
+}
