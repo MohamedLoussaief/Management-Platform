@@ -1,21 +1,22 @@
-.container-fluid {  
+.login-container {  
   height: 100vh;
   background-color: #e9faff;
 }
 
-.container{
-
+.form-container{
 background-color: white;
 width: 500px !important;
 height: 500px !important;
-
 }
 
 .form-control{
-min-width: 25vw !important;
-height:60px;
 border-radius: 0 !important;
 border-color: rgb(182, 178, 178);
+}
+
+.form-input{
+min-width: 25vw !important;
+height:60px;
 }
 
 .btn{
@@ -25,12 +26,17 @@ min-width: 25vw !important;
 }
 
 
+.error{
+color:red !important;
+border-radius: 2%;
+}
+
+
+
 @media(max-width:1000px) {
     
-.container{
- 
-width: 350px !important;
-               
+.form-container{
+width: 350px !important;               
 }
 
 }
@@ -39,9 +45,7 @@ width: 350px !important;
 @media(max-width:814px){
 
 .btn{
-
-min-width: 200px !important;
-        
+min-width: 200px !important;       
 }
 
 
