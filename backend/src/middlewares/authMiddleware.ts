@@ -10,7 +10,7 @@ interface AuthenticatedRequest extends Request {
 
 
 
-const requireAuth = async (req: AuthenticatedRequest, res: Response, next: NextFunction)=>{
+export const requireAuth = async (req: AuthenticatedRequest, res: Response, next: NextFunction)=>{
 
 // verify authorization
 const {authorization} = req.headers;
@@ -27,7 +27,7 @@ try{
 
 const {_id}= jwt.verify(token, process.env.SECRET as string) as JwtPayload
 
-req.user = await User.findOne({_id}).select('_id')
+req.user = await User.findOne({_id}).select('userType')
 next()
 
 
@@ -38,5 +38,16 @@ res.status(401).json({error:'Request is not authorized'})
 
 }
 
-
 } 
+
+export const  requireAdmin = async(req: AuthenticatedRequest, res: Response, next: NextFunction)=>{
+
+const {user} = req
+
+if(!user || user.userType!=="Admin"){
+
+return res.status(403).json({error:'Access forbidden'})    
+}
+
+next()
+}

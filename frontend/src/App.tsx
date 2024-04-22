@@ -12,17 +12,19 @@ function App() {
 const [isLoading, setIsLoading] = useState(true);
 const decodedToken = useDecodedToken();
 const {user} = useAuthContext();
-  
+ 
 
 useEffect(() => {
-  if (user && decodedToken) {
-    setIsLoading(false);
-  }
+  
+setIsLoading(false);
+  
 }, [user, decodedToken]);
+
 
 if (isLoading) {
   return <></>
 }
+
 
 const userType = decodedToken?.userType;
 

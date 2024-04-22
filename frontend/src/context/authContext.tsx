@@ -52,7 +52,7 @@ dispatch({type:'LOGIN', payload:user})
 },[]);
 
 
-console.log('AuthContext state: ', state)
+//console.log('AuthContext state: ', state)
 
 return (
     

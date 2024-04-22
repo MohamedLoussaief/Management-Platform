@@ -21,7 +21,7 @@ e.preventDefault()
 
 await Login(email, password)
 
-console.log(email, password)
+//console.log(email, password)
     
 }
 

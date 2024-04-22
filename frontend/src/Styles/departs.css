@@ -1,7 +1,7 @@
 .departbody{
 display: flex;
+/*overflow-y: hidden;*/
 
-overflow-y: hidden;
 }
 
 .departs{
@@ -16,7 +16,6 @@ margin-bottom: 10vh;
 }
 
 .add{
-
 width: 160px !important;
 border: none;
 border-radius: 5px;
@@ -25,3 +24,33 @@ color:white;
 padding-bottom: 2px;
 padding-top: 2px;
 }
+
+
+
+.action a{
+display: inline-block;    
+text-decoration-line: underline !important;
+color:rgb(0, 136, 255)!important;
+cursor:pointer;
+}
+
+.action a:hover{
+    
+color:rgb(2, 93, 172)!important;
+
+}
+
+
+
+
+
+
+@media(max-width:1079px){
+
+
+
+
+
+}
+
+

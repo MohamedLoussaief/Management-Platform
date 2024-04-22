@@ -1,4 +1,5 @@
 import User from "../models/user.js";
+import depart from "../models/depart.js";
 import dotenv from 'dotenv';
 import jwt from "jsonwebtoken";
 dotenv.config({ path: '../.env' });
@@ -19,18 +20,61 @@ const loginUser = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
-// add user
-const addUser = async (req, res) => {
-    const { email, password, userType, firstName, lastName, salary, leaveBalance, func } = req.body;
+// Add Employee
+const addEmp = async (req, res) => {
+    const { email, password, userType, firstName, lastName, salary, leaveBalance, func, id_depart, confirmPassword } = req.body;
     try {
-        const user = await User.addingUser(email, password, userType, firstName, lastName, salary, leaveBalance, func);
-        // Create a token
-        //const token = createToken(user._id);
-        res.status(200).json({ email, user, /*token*/ });
+        const user = await User.addingEmp(email, password, confirmPassword, userType, firstName, lastName, salary, leaveBalance, func, id_depart);
+        res.status(200).json(user);
     }
     catch (error) {
         res.status(400).json({ error: error.message });
     }
 };
-export { loginUser, addUser };
+// Update Employee
+const updateEmp = async (req, res) => {
+    const { email, password, confirmPassword, userType, firstName, lastName, salary, leaveBalance, func, id_depart } = req.body;
+    const { id } = req.params;
+    try {
+        const updatedEmp = await User.updateEmp(email, password, confirmPassword, userType, firstName, lastName, salary, leaveBalance, func, id_depart, id);
+        if (!updatedEmp) {
+            console.log;
+            res.status(400).json({ message: "Employee not found" });
+            return;
+        }
+        res.status(200).json(updatedEmp);
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+// Delete Employee
+const deleteEmp = async (req, res) => {
+    try {
+        // id_employee , id_departement
+        const { id, id1 } = req.params;
+        const deleteEmp = await User.findByIdAndDelete(id);
+        await depart.findByIdAndUpdate(id1, { $inc: { nbEmp: -1 } });
+        if (!deleteEmp) {
+            res.status(404).json({ message: "Employee not found" });
+            return;
+        }
+        res.status(200).json({ message: "Employee deleted succefully" });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(400).json({ message: error.message });
+    }
+};
+// Get All Employees 
+const getAllEmp = async (req, res) => {
+    try {
+        const Emp = await User.find({ userType: { $in: ["Employee", "DepartHead"] } });
+        res.status(200).json(Emp);
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+export { loginUser, addEmp, updateEmp, deleteEmp, getAllEmp };
 //# sourceMappingURL=user.js.map

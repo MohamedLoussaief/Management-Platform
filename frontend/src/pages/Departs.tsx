@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Sidebar} from "../component/Sidebar" 
 import '../Styles/departs.css'
 import usePopup from '../hooks/usePopup';
 import Popup from '../component/Popup';
+import {useAllDeparts} from '../hooks/useAllDeparts'
+import useDeleteDepart from '../hooks/useDeleteDepart';
 
 const Departs = ()=>{
 
-const {isPopupOpen, openPopup, closePopup} = usePopup()
+const {isPopupOpen, openPopup, closePopup, action, actionPopup, idDepart,
+id, currentDepartName, departName} = usePopup()
+
+const {departs, isloading, error} = useAllDeparts(); 
+
+const {deleteDepart} = useDeleteDepart();
+
+const handleDelete=(id: string)=>{
+
+if(window.confirm("Are you sure you want to delete this departement") == true){
+
+deleteDepart(id);
+
+}
+
+}
+
 
 return(
 <div className='departbody'>
@@ -26,35 +44,31 @@ return(
               <th>Department Name</th>
               <th>Number of Employees</th>
               <th>Action</th>
-              <th><button className='add' onClick={openPopup}>+Add Departement</button></th>
+              <th><button className='add' onClick={()=>{openPopup(); actionPopup("add")}}>+Add Departement</button></th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Finance</td>
-              <td>25</td>
-              <td><a>Update</a>/<a >Delete</a></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Human Resources</td>
-              <td>30</td>
-              <td><a>Update</a>/<a>Delete</a></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Marketing</td>
-              <td>20</td>
-              <td><a>Update</a>/<a>Delete</a></td>
-            </tr>
+           
+{
+departs.map((depart, index)=>(<tr key={depart._id}>
+
+<td>{index+1}</td>  
+<td>{depart.departName}</td>  
+<td>{String(depart.nbEmp)}</td>  
+<td className="action"><a onClick={()=>{openPopup(); actionPopup("update"); idDepart(depart._id);
+currentDepartName(depart.departName) } }>Update</a>/<a onClick={()=>handleDelete(depart._id)}>Delete</a></td>
+</tr>))
+
+
+}
+
             
           </tbody>
         </table>
       </div>
     </div>
 
-    <Popup isOpen={isPopupOpen} onClose={closePopup}/>
+    <Popup isOpen={isPopupOpen} onClose={closePopup} action={action} id={id} depart={departName}  />
     </div>
 
 
