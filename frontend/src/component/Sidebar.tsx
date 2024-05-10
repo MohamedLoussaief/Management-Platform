@@ -3,7 +3,7 @@ import {Navigate} from 'react-router-dom'
 import "../Styles/sidebar.css"
 import useDecodedToken from "../hooks/useDecodedToken"
 import {useLogout} from "../hooks/useLogout"
-import {Routes, Route, Link} from 'react-router-dom'
+import {Routes, Route,  Link} from 'react-router-dom'
 
 
 
@@ -40,25 +40,23 @@ return(
 
 userType == "Admin" ? (
 <>
-<Link to='' className="sideItem"><img src="./images/demands.png" style={{width:"30px",height:"30px"}}/><p>Demands</p></Link>
-<Link to='/Departs' className="sideItem"><img src="./images/department.png" style={{width:"30px",height:"30px"}}/><p>Departements</p></Link>
-<Link to='/Employees' className="sideItem"><img src="./images/employee.png" style={{width:"35px",height:"35px"}}/><p>Employees</p></Link>
+<Link to='/' className="sideItem"><img src="./images/demands.png" style={{width:"30px",height:"30px"}}/><p className={`${window.location.pathname === '/' ? 'activeLink' : ''}`}>Requests</p></Link>
+<Link to='/Departs'  className="sideItem"><img src="./images/department.png" style={{width:"30px",height:"30px"}}/><p className={`${window.location.pathname === '/Departs' ? 'activeLink' : ''}`}>Departements</p></Link>
+<Link to='/Employees' className="sideItem"><img src="./images/employee.png" style={{width:"35px",height:"35px"}}/><p className={`${window.location.pathname === '/Employees' ? 'activeLink' : ''}`}>Employees</p></Link>
 <Link to='' className="sideItem"><img src="./images/setting.png"/><p>Settings</p></Link>
 </>
  ): userType == "Employee"?(
 
 <>
-<Link to='' className="sideItem"><img src="./images/MyDemands.png" style={{width:"30px",height:"30px"}}/><p>My Demands</p></Link>
-<Link to='' className="sideItem"><img src="./images/AddDemand.png" style={{width:"30px",height:"30px"}}/><p>Add Demand</p></Link>
-<Link to='' className="sideItem"><img src="./images/setting.png"/><p>Settings</p></Link>
+<Link to='' className="sideItem" style={{marginBottom:"15vh"}}><img src="./images/MyDemands.png" style={{width:"30px",height:"30px"}}/><p className={`${window.location.pathname === '/' ? 'activeLink' : ''}`}>My Requests</p></Link>
+<Link to='' className="sideItem" style={{marginBottom:"15vh"}}><img src="./images/setting.png"/><p>Settings</p></Link>
 </>
 
  ): userType == "DepartHead"?(
 
 <>
-<Link to='' className="sideItem"><img src="./images/demands.png" style={{width:"30px",height:"30px"}}/><p>Demands</p></Link>
-<Link to='' className="sideItem"><img src="./images/MyDemands.png" style={{width:"30px",height:"30px"}}/><p>My Demands</p></Link>
-<Link to='' className="sideItem"><img src="./images/AddDemand.png" style={{width:"30px",height:"30px"}}/><p>Add Demand</p></Link>
+<Link to='' className="sideItem"><img src="./images/demands.png" style={{width:"30px",height:"30px"}}/><p>Requests</p></Link>
+<Link to='/MyRequests' className="sideItem"><img src="./images/MyDemands.png" style={{width:"30px",height:"30px"}}/><p className={`${window.location.pathname === '/MyRequests' ? 'activeLink' : ''}`}>My Requests</p></Link>
 <Link to='' className="sideItem"><img src="./images/setting.png"/><p>Settings</p></Link>
 </>    
 

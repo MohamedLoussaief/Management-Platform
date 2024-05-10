@@ -153,9 +153,22 @@ res.status(500).json({error:error.message})
 }
 
 
+// update employee leave balance every month
+const updateLeaveBalances = async()=>{
+
+try {
+
+const updateQuery = { $inc: { leaveBalance: 2.5 } };
 
 
+await User.updateMany({ userType: { $in: ['Employee', 'DepartHead'] } }, updateQuery);
 
+console.log('Leave balances updated successfully.');
+} catch (error) {
+console.error('Error updating leave balances:', error);
+}
 
-export {loginUser, addEmp, updateEmp, deleteEmp, getAllEmp}
+}
+
+export {loginUser, addEmp, updateEmp, deleteEmp, getAllEmp, updateLeaveBalances}
 

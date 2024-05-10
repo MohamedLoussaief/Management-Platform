@@ -10,7 +10,6 @@ router.post('/login', loginUser)
 // require authorization 
 router.use(requireAuth)
 
-
 router.use(requireAdmin)
 
 // Add Employee route

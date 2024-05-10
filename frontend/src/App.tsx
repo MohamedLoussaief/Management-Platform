@@ -7,11 +7,12 @@ import {useAuthContext} from './hooks/useAuthContext'
 import useDecodedToken from './hooks/useDecodedToken'
 import Departs from "./pages/Departs" 
 import Employees from "./pages/Employees"
+import MyRequests from './pages/MyRequests';
 
 function App() {
-const [isLoading, setIsLoading] = useState(true);
-const decodedToken = useDecodedToken();
-const {user} = useAuthContext();
+const [isLoading, setIsLoading] = useState(true)
+const decodedToken = useDecodedToken()
+const {user} = useAuthContext()
  
 
 useEffect(() => {
@@ -25,7 +26,6 @@ if (isLoading) {
   return <></>
 }
 
-
 const userType = decodedToken?.userType;
 
 return (
@@ -36,6 +36,7 @@ return (
 <Route path="/login" element={!user ? <Login/> : <Navigate to="/"/>}/>
 <Route path="/Departs"  element={user && userType=="Admin" ? <Departs/> : <Navigate to="/"/>} />
 <Route path="/Employees" element={user && userType=="Admin" ? <Employees/> : <Navigate to="/"/>}/>
+<Route path="/MyRequests" element={user && userType=="DepartHead" ? <MyRequests/> : <Navigate to="/"/>}/>
 
 </Routes>
 </BrowserRouter>

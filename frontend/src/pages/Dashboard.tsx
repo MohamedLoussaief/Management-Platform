@@ -1,10 +1,45 @@
-import React from "react";
-import {Sidebar} from "../component/Sidebar"
+import React, {useEffect, useState} from "react";
+import MyRequests from "../pages/MyRequests"
+import useDecodedToken from '../hooks/useDecodedToken'
+import { Sidebar } from "../component/Sidebar";
+
 
 
 const Dashboard =()=>{
+   
+const decodedToken = useDecodedToken();
 
-return (<Sidebar/> )
+const userType = decodedToken?.userType;
+
+
+
+return (
+<>   
+{
+
+userType=="Employee" && <MyRequests/> 
+
+}
+
+
+{
+
+userType=="DepartHead" && <Sidebar/> 
+
+}
+
+{
+
+userType=="Admin" && <Sidebar/> 
+
+}
+
+</> 
+
+
+
+
+)
 
 }
 

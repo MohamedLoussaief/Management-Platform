@@ -16,7 +16,6 @@ DepartHead = "DepartHead"
 
 // User Schema
 interface IUser extends Document{
-
 userType: UserType;
 firstName: string;
 lastName: string;
@@ -30,10 +29,7 @@ id_depart?:string;
 }
 
 
-
-
 const userSchema = new Schema<IUser>({
-
 userType:{type: String, enum: Object.values(UserType) ,required:true},
 firstName:{type: String, required:true},
 lastName:{type :String, required:true},
@@ -44,7 +40,6 @@ leaveBalance: {type: Number},
 func:{type: String},
 id_depart:{type: String},
 }); 
-
 
 
 // Define the static methods
@@ -63,9 +58,9 @@ interface IUserModel extends Model<IUser> {
 
 
 // Validation  function
-const validEmp = async(userType:string, func:string, firstName:string, 
+const validEmp = async function(this:Model<IUser>, userType:string, func:string, firstName:string, 
 lastName:string, email:string, id_depart:string, salary:number, 
-leaveBalance:number, password:string, confirmPassword:string)=>{
+leaveBalance:number, password:string, confirmPassword:string){
 
 if(userType=="Employee" && !func){
 
@@ -111,7 +106,25 @@ if(userType!=="Employee" && userType!=="DepartHead"){
 throw Error("Role is not valid")
     
 }
-    
+
+
+// Head of depart already exist
+if(userType==="DepartHead"){
+
+const departHeadExist = await this.findOne({id_depart:id_depart, userType:"DepartHead"})
+
+if(departHeadExist){
+
+throw new Error("The chosen department already has a department head")
+
+}
+
+}
+
+
+
+
+
 // func, salary, leaveBalance  validation
 if(func && !validator.isAlpha(func, 'en-US', {ignore: " " })){
     
@@ -157,11 +170,6 @@ throw Error("Password not strong enough");
 
 
 
-
-
-
-
-
 // static addUser method
 userSchema.statics.addingEmp = async function(this:Model<IUser>, 
 email:string, password:string, confirmPassword:string, userType:string, firstName:string, lastName:string,
@@ -186,7 +194,7 @@ throw Error("Email already exists")
 
 }
 
-await validEmp(userType, func, firstName, 
+await validEmp.call(this ,userType, func, firstName, 
 lastName, email, id_depart, salary, 
 leaveBalance, password, confirmPassword)
 
@@ -241,7 +249,7 @@ throw Error("Email already exists")
 }
 
 
-await validEmp(userType, func, firstName, 
+await validEmp.call(this, userType, func, firstName, 
 lastName, email, id_depart, salary, 
 leaveBalance, password, confirmPassword)
 

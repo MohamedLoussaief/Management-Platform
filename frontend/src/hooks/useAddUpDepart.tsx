@@ -15,7 +15,7 @@ const [success, setSuccess] = useState<string>("")
 // Add Departement
 const addDepart = async (e:FormEvent)=>{
     
-e.preventDefault();
+e.preventDefault()
     
 if(!user){
     return;

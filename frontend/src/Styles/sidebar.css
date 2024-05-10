@@ -14,8 +14,12 @@ width:180px;
 cursor:pointer;
 color:white !important;
 text-decoration: none;
-
 }
+
+
+
+
+
 
 .sideItem:hover{    
 color:#3a84f2 !important;
@@ -54,16 +58,21 @@ height:25px;
 }
 
 
+.activeLink {
+  color:#3a84f2; 
+}
+
 @media (max-height:669px){
 
 .sidebar{
 
 overflow-y:scroll;
-
+overflow-x:hidden;
 
 }
 ::-webkit-scrollbar {
-    width: 12px; 
+    width: 10px;
+    
   }
   
   ::-webkit-scrollbar-track {
