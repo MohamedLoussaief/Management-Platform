@@ -49,11 +49,6 @@ return;
 
 
 
-
-
-
-
-
 const response = await validateRequest(requestId, String(decodedToken?.userType), requestType, 
 leaveInfo.leaveType, leaveInfo.startDate, leaveInfo.endDate, leaveInfo.id_emp, substituteName)
 

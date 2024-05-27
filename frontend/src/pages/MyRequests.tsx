@@ -139,11 +139,8 @@ endDate: request?.endDate})  }}>Details</a>  }  {request.status!=="Validated" &&
 {(request.status=="Validated" && request.requestType=="Payslip" ) && 
 <button className="btnResult">Download document</button> }
 
-{(request.status=="Validated" && request.requestType=="Insurance Reimbursement" ) && 
-<p>Your Insurance Reimbursement request is validated ! </p> }
-
-{(request.status=="Validated" && request.requestType=="Salary Advance" ) && 
-<p>Your Salary Advance request is validated ! </p> }
+{(request.status=="Validated" && (request.requestType=="Insurance Reimbursement" || request.requestType=="Salary Advance") ) && 
+<p>Your {request.requestType} request is validated ! </p> }
 
 {(request.status=="Canceled") && 
 <p>Your {request.requestType} request is Canceled ! </p> }
