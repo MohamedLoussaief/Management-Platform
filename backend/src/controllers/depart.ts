@@ -52,6 +52,7 @@ const deleteDepart = await Depart.findByIdAndDelete(id);
 
 const deleteEmp = await User.deleteMany({id_depart:id})
 
+
 if(!deleteDepart){
 
 res.status(404).json({message:"Departement not found"})
@@ -74,8 +75,8 @@ res.status(400).json({message:error.message})
 // Update depart
 const updateDepart = async(req:Request, res:Response)=>{
 
-    const { departName } = req.body
-    const { id } = req.params
+const { departName } = req.body
+const { id } = req.params
 
 try{
 

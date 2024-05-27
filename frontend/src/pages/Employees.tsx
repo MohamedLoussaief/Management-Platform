@@ -11,7 +11,7 @@ import useDeleteEmp from "../hooks/useDeleteEmp";
 const Employees = ()=>{
 
 
-const {isPopupOpen, openPopup, closePopup, action, actionPopup, empInfo ,currentEmpInfo} = usePopup()
+const {isPopupOpen, openPopup, closePopup, action, actionPopup, empInfo, currentEmpInfo} = usePopup()
 
 const {departs} = useAllDeparts();
 
@@ -24,13 +24,13 @@ const {deleteEmp} = useDeleteEmp()
 
 const handleDeleteEmp=(id: string, id1:string)=>{
 
-  if(window.confirm("Are you sure you want to delete this employee") == true){
+if(window.confirm("Are you sure you want to delete this employee") == true){
   
-  deleteEmp(id, id1);
+deleteEmp(id, id1);
   
-  }
+}
   
-  }
+}
 
 
 

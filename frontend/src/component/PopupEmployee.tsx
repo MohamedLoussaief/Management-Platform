@@ -8,7 +8,7 @@ isOpen:boolean;
 onClose:()=>void;
 action:string;
 empInfo:{id:string, firstName: string; lastName: string; email: string; idDepart: string; 
-  selectedRole: string; func: string; salary:number; leaveBalances: number; }
+selectedRole: string; func: string; salary:number; leaveBalances: number; }
 }
 
 

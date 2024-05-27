@@ -33,12 +33,12 @@ const userSchema = new Schema<IUser>({
 userType:{type: String, enum: Object.values(UserType) ,required:true},
 firstName:{type: String, required:true},
 lastName:{type :String, required:true},
-email:{type: String, required:true, unique:true },
+email:{type: String, required:true, unique:true},
 password:{type: String, required:true},
 salary:{type: Number},
 leaveBalance: {type: Number},
 func:{type: String},
-id_depart:{type: String},
+id_depart:{type: mongoose.Schema.Types.ObjectId, ref: 'depart'},
 }); 
 
 
@@ -106,23 +106,6 @@ if(userType!=="Employee" && userType!=="DepartHead"){
 throw Error("Role is not valid")
     
 }
-
-
-// Head of depart already exist
-if(userType==="DepartHead"){
-
-const departHeadExist = await this.findOne({id_depart:id_depart, userType:"DepartHead"})
-
-if(departHeadExist){
-
-throw new Error("The chosen department already has a department head")
-
-}
-
-}
-
-
-
 
 
 // func, salary, leaveBalance  validation
@@ -199,6 +182,18 @@ lastName, email, id_depart, salary,
 leaveBalance, password, confirmPassword)
 
 
+// Head of depart already exist
+if(userType==="DepartHead"){
+
+const departHeadExist = await this.findOne({id_depart:id_depart, userType:"DepartHead"})
+
+if(departHeadExist){
+
+throw new Error("The chosen department already has a department head")
+
+}
+
+}
 
 const salt:string = await bcrypt.genSalt(10)
 const hash = await bcrypt.hash(password, salt);
@@ -252,6 +247,22 @@ throw Error("Email already exists")
 await validEmp.call(this, userType, func, firstName, 
 lastName, email, id_depart, salary, 
 leaveBalance, password, confirmPassword)
+
+
+// Get the userType before the update
+const userQuery = await this.findById(id).exec() 
+
+if(userQuery?.userType=="Employee" && userType=="DepartHead"){
+
+const departHeadExist = await this.findOne({id_depart:id_depart, userType:"DepartHead"})
+
+if(departHeadExist){
+
+throw new Error("The chosen department already has a department head")
+
+}
+
+}
 
 
 try{

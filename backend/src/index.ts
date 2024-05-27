@@ -6,7 +6,7 @@ import departRoutes from './routes/depart.js'
 import requestRoutes from './routes/request.js'
 import { updateLeaveBalances } from './controllers/user.js'
 import cron from 'node-cron'
-
+import bodyParser from 'body-parser'
 
 dotenv.config({ path: '../.env' });
 
@@ -20,7 +20,6 @@ app.use("/user", userRoutes)
 app.use("/depart", departRoutes)
 
 app.use("/request", requestRoutes)
-
 
 // Schedule a cron job to run the leave balance update task at the beginning of each month
 cron.schedule('0 0 1 * *', updateLeaveBalances);

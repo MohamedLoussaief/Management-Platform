@@ -8,6 +8,8 @@ import useDecodedToken from './hooks/useDecodedToken'
 import Departs from "./pages/Departs" 
 import Employees from "./pages/Employees"
 import MyRequests from './pages/MyRequests';
+import Requests from './pages/Requests';
+
 
 function App() {
 const [isLoading, setIsLoading] = useState(true)
@@ -40,9 +42,8 @@ return (
 
 </Routes>
 </BrowserRouter>
-  
-  
-  );
+    
+);
 }
 
 export default App;

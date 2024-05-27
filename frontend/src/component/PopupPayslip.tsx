@@ -1,4 +1,4 @@
-import React, {FormEvent, useEffect, useState} from "react";
+import React, {FormEvent, useState} from "react";
 import  '../Styles/popPayslip.css'
 import useAddRequest from "../hooks/useAddRequest"
 
@@ -18,7 +18,7 @@ const [error, setError] = useState<string>('')
 const handleSubmit = async (e: FormEvent) => {
 e.preventDefault();
 
-const response = await addPayslip(e);
+const response = await addPayslip()
 
 if(response) {
 setError(response)
@@ -42,7 +42,7 @@ return(<>
 <form onSubmit={handleSubmit}>
 <p>Do you want to add a payslip request ?</p>
 <p className={error?"errorPayslip":""}>  {error ? error:""}  </p> 
-<button type="submit" className="buttonAdd">+Add</button>
+<button type="submit" className="buttonAddPayslip">+Add</button>
 <button type="button" onClick={()=>{onClose();setError("")}} className="buttonNo">No</button>
 
 </form>

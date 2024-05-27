@@ -1,0 +1,49 @@
+.popLeave{
+position:fixed; 
+top:30%;
+right:40%;
+z-index: 2;
+width:310px;    
+background-color: white; 
+padding-left:20px; 
+padding-right:20px; 
+border-radius: 5px;
+}
+    
+.popLeave form{
+padding-top:8px;    
+}
+            
+.popLeave form label{
+font-weight:500;
+}
+    
+    
+.btnCloseCetificate{
+float: right;
+font-weight: bold;  
+background-color:transparent;
+color:white;
+border: none;
+margin-right:10px;
+margin-top:10px;
+}
+    
+    
+    
+.buttonLeave{
+margin-bottom:8px;
+margin-left:100px;
+margin-top:20px;
+border-radius: 5px;
+background-color: rgb(0, 136, 255);
+border: none;
+color:white;
+padding: 5px;
+width:70px;    
+}
+    
+.errorLeave{
+margin-top: 20px;    
+color:red;
+}

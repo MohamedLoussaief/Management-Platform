@@ -48,14 +48,14 @@ userType == "Admin" ? (
  ): userType == "Employee"?(
 
 <>
-<Link to='' className="sideItem" style={{marginBottom:"15vh"}}><img src="./images/MyDemands.png" style={{width:"30px",height:"30px"}}/><p className={`${window.location.pathname === '/' ? 'activeLink' : ''}`}>My Requests</p></Link>
+<Link to='/' className="sideItem" style={{marginBottom:"15vh"}}><img src="./images/MyDemands.png" style={{width:"30px",height:"30px"}}/><p className={`${window.location.pathname === '/' ? 'activeLink' : ''}`}>My Requests</p></Link>
 <Link to='' className="sideItem" style={{marginBottom:"15vh"}}><img src="./images/setting.png"/><p>Settings</p></Link>
 </>
 
  ): userType == "DepartHead"?(
 
 <>
-<Link to='' className="sideItem"><img src="./images/demands.png" style={{width:"30px",height:"30px"}}/><p>Requests</p></Link>
+<Link to='/' className="sideItem"><img src="./images/demands.png" style={{width:"30px",height:"30px"}}/><p className={`${window.location.pathname === '/' ? 'activeLink' : ''}`}>Requests</p></Link>
 <Link to='/MyRequests' className="sideItem"><img src="./images/MyDemands.png" style={{width:"30px",height:"30px"}}/><p className={`${window.location.pathname === '/MyRequests' ? 'activeLink' : ''}`}>My Requests</p></Link>
 <Link to='' className="sideItem"><img src="./images/setting.png"/><p>Settings</p></Link>
 </>    

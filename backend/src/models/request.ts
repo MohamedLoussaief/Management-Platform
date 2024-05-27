@@ -9,9 +9,9 @@ const Schema = mongoose.Schema;
 
 enum RequestType{
 Payslip="Payslip",
-Insurance="Insurance",
-SalaryAdvance = "SalaryAdvance",
-WorkCertificate = "WorkCertificate",
+Insurance="Insurance Reimbursement",
+SalaryAdvance = "Salary Advance",
+WorkCertificate = "Work Certificate",
 Leave = "Leave"
 }
 
@@ -45,7 +45,8 @@ returnDate:Date;
 substituteName:string;
 certificateReason:string;
 cin:string; 
-id_emp:string;
+deliveryDate:string;
+id_emp:mongoose.Schema.Types.ObjectId;
 }
 
 
@@ -66,7 +67,7 @@ returnDate:{type: Date},
 substituteName:{type: String},
 certificateReason:{type: String},
 cin:{type: String},
-id_emp: {type: String, required:true}
+id_emp: {type: mongoose.Schema.Types.ObjectId, ref: 'User' , required:true}
 }
 )
 
@@ -78,8 +79,8 @@ salaryRequest(amount:number, id_emp:string):Promise<IRequest>
 
 payslipRequest(id_emp:string):Promise<IRequest>
 
-LeaveRequest(id_emp:string, userType:string, leaveType:string, startDate:string,
-endDate:string, substituteName?:string):Promise<IRequest>
+LeaveRequest(id_emp:string, leaveType:string, startDate:string,
+endDate:string):Promise<IRequest>
 
 workCertificateRequest(id_emp:string, cin:string, certificateReason:string):Promise<IRequest>
 
@@ -108,7 +109,7 @@ throw new Error("Amount must be a number")
 
 
 // Check if there's a salary advance request in the current month
-const salaryReq = await this.findOne({id_emp: id_emp, requestType: "SalaryAdvance"}).select("requestDate").sort({requestDate:-1}).exec();
+const salaryReq = await this.findOne({id_emp: id_emp, requestType: "Salary Advance"}).select("requestDate").sort({requestDate:-1}).exec();
 
 const requestDate = salaryReq?.requestDate as Date
 
@@ -139,7 +140,7 @@ throw new Error("The amount must not surpass 50% of the salary.")
 
 }
 
-const request = await this.create({amount, id_emp, status:"Awaiting", requestType:"SalaryAdvance"}) 
+const request = await this.create({amount, id_emp, status:"Awaiting", requestType:"Salary Advance"}) 
 return request;
 
 
@@ -180,17 +181,11 @@ return request;
 
 
 // Leave request
-requestSchema.statics.LeaveRequest = async function(this:Model<IRequest>, id_emp, userType, leaveType, startDate,
-endDate, substituteName){
+requestSchema.statics.LeaveRequest = async function(this:Model<IRequest>, id_emp, leaveType, startDate,
+endDate){
 
    
 if(!id_emp || !leaveType || !startDate || !endDate){
-
-throw new Error("Please fill the empty field")
-
-}
-
-if(userType=="DepartHead" && !substituteName){
 
 throw new Error("Please fill the empty field")
 
@@ -300,12 +295,6 @@ throw new Error("There's not enough employees present please choose another leav
 }
 
 
-if(leaveType == LeaveType.Paid){
-
-const updateLeaveBalance = await User.findOneAndUpdate({_id:id_emp}, {$inc:{leaveBalance:-days}})
-
-}
-
 
 
 
@@ -320,7 +309,7 @@ returnDate = addDays(returnDate, 1)
 
 
 const request = await this.create({id_emp, status:"Awaiting", requestType:"Leave", 
-leaveType, startDate, endDate, returnDate, substituteName: substituteName || undefined})
+leaveType, startDate, endDate, returnDate})
 
 return request 
 
@@ -351,15 +340,15 @@ throw new Error("The CIN must start with 0 or 1")
 }
 
 
-if(cin.length > 8){
+if(cin.length !== 8){
 
-throw new Error("The CIN must not exceed 8 digits")
+throw new Error("The CIN must be 8 digits")
 
 }
 
 
 // Checking if there's work certificate already
-const empCertificateRequest = await this.findOne({id_emp:id_emp, requestType:"WorkCertificate", 
+const empCertificateRequest = await this.findOne({id_emp:id_emp, requestType:"Work Certificate", 
 status:{$in:[`${Status.Awaiting}`, `${Status.ValidDepartHead}`]}}).sort({requestDate:-1}).limit(1).exec()
 
 if(empCertificateRequest){
@@ -369,7 +358,7 @@ throw new Error("You have already submitted a request for work certificate.")
 }
 
 
-const request = this.create({id_emp, status:"Awaiting", requestType:"WorkCertificate", cin, certificateReason})
+const request = this.create({id_emp, status:"Awaiting", requestType:"Work Certificate", cin, certificateReason})
 
 return request
 
@@ -394,16 +383,16 @@ throw new Error("Please upload a file")
 
 
 // Checking if there's Insurance request already
-const empInsuranceRequest = await this.findOne({id_emp:id_emp, requestType:"Insurance", 
+const empInsuranceRequest = await this.findOne({id_emp:id_emp, requestType:"Insurance Reimbursement", 
 status:{$in:[`${Status.Awaiting}`, `${Status.ValidDepartHead}`]}}).sort({requestDate:-1}).limit(1).exec()
 
 if(empInsuranceRequest){
 
-throw new Error("You have already submitted a request for work certificate.")
+throw new Error("You have already submitted a request for insurance reimbursement.")
 
 }
 
-const request = await this.create({id_emp, status:"Awaiting", requestType:"Insurance", document})
+const request = await this.create({id_emp, status:"Awaiting", requestType:"Insurance Reimbursement", document})
 return request 
 
 

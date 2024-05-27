@@ -19,7 +19,7 @@ const userSchema = new Schema({
     salary: { type: Number },
     leaveBalance: { type: Number },
     func: { type: String },
-    id_depart: { type: String },
+    id_depart: { type: mongoose.Schema.Types.ObjectId, ref: 'depart' },
 });
 // Validation  function
 const validEmp = async function (userType, func, firstName, lastName, email, id_depart, salary, leaveBalance, password, confirmPassword) {
@@ -47,13 +47,6 @@ const validEmp = async function (userType, func, firstName, lastName, email, id_
     // userType validation
     if (userType !== "Employee" && userType !== "DepartHead") {
         throw Error("Role is not valid");
-    }
-    // Head of depart already exist
-    if (userType === "DepartHead") {
-        const departHeadExist = await this.findOne({ id_depart: id_depart, userType: "DepartHead" });
-        if (departHeadExist) {
-            throw new Error("The chosen department already has a department head");
-        }
     }
     // func, salary, leaveBalance  validation
     if (func && !validator.isAlpha(func, 'en-US', { ignore: " " })) {
@@ -86,6 +79,13 @@ userSchema.statics.addingEmp = async function (email, password, confirmPassword,
         throw Error("Email already exists");
     }
     await validEmp.call(this, userType, func, firstName, lastName, email, id_depart, salary, leaveBalance, password, confirmPassword);
+    // Head of depart already exist
+    if (userType === "DepartHead") {
+        const departHeadExist = await this.findOne({ id_depart: id_depart, userType: "DepartHead" });
+        if (departHeadExist) {
+            throw new Error("The chosen department already has a department head");
+        }
+    }
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
     const user = await this.create({ email, password: hash,
@@ -109,6 +109,14 @@ userSchema.statics.updateEmp = async function (email, password, confirmPassword,
         }
     }
     await validEmp.call(this, userType, func, firstName, lastName, email, id_depart, salary, leaveBalance, password, confirmPassword);
+    // Get the userType before the update
+    const userQuery = await this.findById(id).exec();
+    if (userQuery?.userType == "Employee" && userType == "DepartHead") {
+        const departHeadExist = await this.findOne({ id_depart: id_depart, userType: "DepartHead" });
+        if (departHeadExist) {
+            throw new Error("The chosen department already has a department head");
+        }
+    }
     try {
         const emp = await this.findById(id);
         if (!emp) {

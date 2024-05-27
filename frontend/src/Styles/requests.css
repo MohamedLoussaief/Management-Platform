@@ -1,0 +1,60 @@
+.reqContainer{
+position: relative;     
+background-color: #f1f5f9;
+min-width:100vw;
+}
+
+.reqTable{   
+margin-top:30px;    
+margin-right: 30px;
+border-radius: 5px; 
+height: 73vh;
+overflow-y: scroll;
+}
+
+.tableContainer h1{
+margin-top:40px;    
+margin-bottom:30px;
+margin-left:30px;
+}
+
+
+.tableContainer{
+width:85vw;
+}
+
+
+.actionReq a{
+cursor:pointer;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+text-decoration: none;
+margin-left: 4%;
+}
+
+
+.reqContainer select{    
+width:10vw;
+height: 30px;
+margin-left:10px;
+}
+
+.reqTable::-webkit-scrollbar {
+  width: 6px; 
+}
+
+.reqTable::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.reqTable::-webkit-scrollbar-thumb {
+  background: #ababab; 
+  border-radius: 4px; 
+}
+
+.reqTable::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+

@@ -36,9 +36,6 @@ color:white;
 }
 
 
-
-
-
 .requests button p{
 margin-top:18px;
 margin-left:8px;
@@ -48,7 +45,6 @@ margin-left:8px;
 margin-left: 30px;
 margin-right: 30px;
 border-radius: 5px;
-
 }
 
 
@@ -57,3 +53,10 @@ border-radius: 5px;
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
 
  }
+
+.btnResult{
+background: rgb(0, 136, 255);
+color:white;
+border: none;
+border-radius: 5px;
+}

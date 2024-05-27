@@ -10,12 +10,16 @@ export const useMyRequests = ()=>{
 
 
 interface Request{
-
+endDate: string
+startDate: string
+leaveType: string
+certificateReason: string
+cin: string
+amount: number
 _id:string,
 requestType:string,
 requestDate:string,
 status:string,
-
 }
 
 

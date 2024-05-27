@@ -1,0 +1,44 @@
+.certificate-container {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #000;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.company-logo {
+  font-weight: bold;
+  color: red;
+}
+
+.delivery-date {
+  font-weight: bold;
+  color: red;
+}
+
+h1 {
+  text-align: center;
+  text-decoration: underline;
+  margin-bottom: 20px;
+}
+
+p {
+  margin: 10px 0;
+}
+
+.bold {
+  font-weight: bold;
+  color: red;
+}
+
+.signature {
+  text-align: right;
+  margin-top: 50px;
+}
