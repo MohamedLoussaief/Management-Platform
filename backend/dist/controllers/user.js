@@ -1,25 +1,7 @@
 import User from "../models/user.js";
 import depart from "../models/depart.js";
 import dotenv from 'dotenv';
-import jwt from "jsonwebtoken";
 dotenv.config({ path: '../.env' });
-// creating token
-const createToken = (_id, firstName, lastName, userType) => {
-    return jwt.sign({ _id, firstName, lastName, userType }, process.env.SECRET, { expiresIn: '3d' });
-};
-// login user
-const loginUser = async (req, res) => {
-    const { email, password } = req.body;
-    try {
-        const user = await User.login(email, password);
-        //create token
-        const token = createToken(user._id, user.firstName, user.lastName, user.userType);
-        res.status(200).json({ token });
-    }
-    catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
 // Add Employee
 const addEmp = async (req, res) => {
     const { email, password, userType, firstName, lastName, salary, leaveBalance, func, id_depart, confirmPassword } = req.body;
@@ -87,5 +69,5 @@ const updateLeaveBalances = async () => {
         console.error('Error updating leave balances:', error);
     }
 };
-export { loginUser, addEmp, updateEmp, deleteEmp, getAllEmp, updateLeaveBalances };
+export { addEmp, updateEmp, deleteEmp, getAllEmp, updateLeaveBalances };
 //# sourceMappingURL=user.js.map

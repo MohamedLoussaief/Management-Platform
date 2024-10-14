@@ -26,6 +26,7 @@ salary?: number;
 leaveBalance?: number;
 func?: string;
 id_depart?:string;
+registrationDate:Date;
 }
 
 
@@ -39,6 +40,11 @@ salary:{type: Number},
 leaveBalance: {type: Number},
 func:{type: String},
 id_depart:{type: mongoose.Schema.Types.ObjectId, ref: 'depart'},
+registrationDate:{type: Date, default: function() {    
+    const tunisTime = new Date().toLocaleString('en-US', { timeZone: 'Africa/Tunis' });
+    return new Date(tunisTime);
+    }
+    }
 }); 
 
 

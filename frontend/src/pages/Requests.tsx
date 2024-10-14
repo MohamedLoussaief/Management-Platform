@@ -25,6 +25,7 @@ leaveType:string,
 
 
 interface requestInfo{
+_id:string;    
 requestType: string;
 amount: number;
 cin: string;
@@ -53,6 +54,7 @@ leaveType:""
 
 
 const [requestInfo, setRequestInfo] = useState<requestInfo>({
+_id:"",    
 requestType:"",
 amount:0,
 cin:"",
@@ -125,11 +127,12 @@ openPopup()
 }
 
 
-const handleShowInfo = (requestType: string, amount: number, cin: string, reason: string, 
+const handleShowInfo = (_id: string, requestType: string, amount: number, cin: string, reason: string, 
 leaveType: string, startDate: string, endDate: string, document:string, substituteName:string)=>{
 
 setPopupType("show")   
 setRequestInfo({
+_id:_id,    
 requestType:requestType,
 amount:amount,
 cin:cin,
@@ -239,7 +242,7 @@ filteredRequests.map((request)=>(
  <td> {request.status}  </td>
  <td>  {format(new Date(request.requestDate), "dd/MM/yyyy, HH:mm" )}   </td>
  <td className="d-flex flex-row actionReq"> { request.requestType!=="Payslip" &&  
- <a onClick={()=>{handleShowInfo(request.requestType, request.amount, request.cin, request.certificateReason,    
+ <a onClick={()=>{handleShowInfo(request._id, request.requestType, request.amount, request.cin, request.certificateReason,    
  request.leaveType, request.startDate, request.endDate, request.document, request.substituteName)} }><img src="../images/visual.png" 
  className="mt-1 me-1"style={{width:"20px",height:"20px"}} alt="Show"/><p style={{color:"blue"}}>Show</p> </a>  }
  

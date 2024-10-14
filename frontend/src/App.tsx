@@ -19,9 +19,11 @@ const {user} = useAuthContext()
 
 useEffect(() => {
   
-setIsLoading(false);
+const loading = setTimeout(()=>{setIsLoading(false)}, 100)  
+
+return ()=> clearTimeout(loading)
   
-}, [user, decodedToken]);
+}, []);
 
 
 if (isLoading) {

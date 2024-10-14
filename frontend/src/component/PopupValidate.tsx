@@ -27,8 +27,10 @@ const PopupValidate:React.FC<PopupValidate> = ({isOpen, onClose, requestType, re
 
 
 const decodedToken = useDecodedToken()
+
 const {substituteNames, isloading, error} = useSubstituteNames(leaveInfo.id_emp, leaveInfo.id_depart, 
 leaveInfo.startDate, leaveInfo.endDate)
+
 const [substituteName, setSubstituteName] = useState<string>("")
 
 const {validateRequest, file, setFile, validatePayslip} = useValidateRequest()
@@ -40,7 +42,7 @@ const handleSubmitRequest = async(e: FormEvent)=>{
 e.preventDefault();
 
 
-if(!substituteName && ((decodedToken?.userType=="DepartHead" && requestUserType=="Employee") 
+if(!substituteName && (requestType=="Leave") && ((decodedToken?.userType=="DepartHead" && requestUserType=="Employee") 
 || (decodedToken?.userType=="Admin" && requestUserType=="DepartHead")) ){
 
 setError1("Please choose the substitute name")
@@ -141,7 +143,8 @@ onChange={(e)=>{handleFileChange(e)}}/>
 {
 substituteNames.map((substituteName)=>(
 
-<option value={substituteName.firstName + " " + substituteName.lastName}>
+<option key ={substituteName.firstName + " " + substituteName.lastName} 
+value={substituteName.firstName + " " + substituteName.lastName}>
 {substituteName.firstName + " " + substituteName.lastName}</option>
 
 ))

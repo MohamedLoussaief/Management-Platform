@@ -31,7 +31,7 @@ return(
 <div className='userDiv'>
 
 <img src='./images/user.png'/>
-<h5> {decodedToken?.firstName} {decodedToken?.lastName} </h5>
+<h5> {decodedToken?.fullName} </h5>
 <p> {userType} </p>
 </div>
 

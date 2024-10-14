@@ -12,6 +12,9 @@ import PopupupRequestInfo from "../component/PopupRequestInfo"
 import usePopup from '../hooks/usePopup';
 import useDeleteRequest from "../hooks/useDeleteRequest"
 import { useNavigate } from "react-router-dom"
+import { useDownloadDocument } from "../hooks/useDownloadDocument"
+import { useGeneratePdf } from "../hooks/useGeneratePdf"
+
 
 const MyRequests = ()=>{
 
@@ -30,7 +33,7 @@ const {requests, isloading, error} = useMyRequests()
 const {isPopupOpen, openPopup, closePopup} = usePopup()
 const [popupType, setPopupType] = useState<string>("")
 const {deleteRequest} = useDeleteRequest()
-const [requestInfo, setRequestInfo] = useState<RequestInfo>({
+const [requestInfo, setRequestInfo] = useState<RequestInfo>({ 
 requestType: "",
 amount: 0,
 cin: "",
@@ -40,8 +43,9 @@ startDate: "",
 endDate: ""
 });
 
+const  {downloadDocument} = useDownloadDocument() 
 
-
+const {generatePdf} = useGeneratePdf()
 
 
 
@@ -77,6 +81,25 @@ alert(response)
 }
 
 }
+
+}
+
+
+
+const handleDownload = async(requestId:string)=>{
+
+
+  await downloadDocument(requestId)
+  
+  
+  }
+
+const handlePdf = async(requestId:string)=>{
+
+await generatePdf(requestId)
+
+console.log("generate")
+
 
 }
 
@@ -131,13 +154,13 @@ startDate: request?.startDate,
 endDate: request?.endDate})  }}>Details</a>  }  {request.status!=="Validated" && <a onClick={()=>{handleDelete(request._id)}}>Cancel</a>}</td>
 
 <td> {(request.status=="Validated" && request.requestType=="Work Certificate" ) && 
- <button className="btnResult">Work Certificate</button> }  
+ <button className="btnResult" onClick={()=>handlePdf(request._id)}>Work Certificate</button> }  
 
 {(request.status=="Validated" && request.requestType=="Leave" ) && 
-<button className="btnResult">Leave Document</button>}
+<button className="btnResult"  onClick={()=>handlePdf(request._id)}>Leave Document</button>}
 
 {(request.status=="Validated" && request.requestType=="Payslip" ) && 
-<button className="btnResult">Download document</button> }
+<button className="btnResult" onClick={()=>handleDownload(request._id)}>Download document</button> }
 
 {(request.status=="Validated" && (request.requestType=="Insurance Reimbursement" || request.requestType=="Salary Advance") ) && 
 <p>Your {request.requestType} request is validated ! </p> }

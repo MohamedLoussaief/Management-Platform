@@ -20,6 +20,11 @@ const userSchema = new Schema({
     leaveBalance: { type: Number },
     func: { type: String },
     id_depart: { type: mongoose.Schema.Types.ObjectId, ref: 'depart' },
+    registrationDate: { type: Date, default: function () {
+            const tunisTime = new Date().toLocaleString('en-US', { timeZone: 'Africa/Tunis' });
+            return new Date(tunisTime);
+        }
+    }
 });
 // Validation  function
 const validEmp = async function (userType, func, firstName, lastName, email, id_depart, salary, leaveBalance, password, confirmPassword) {

@@ -58,7 +58,7 @@ const storage = multer.diskStorage({
 });
 const insuranceRequest = async (req, res) => {
     try {
-        const document = req.file ? `${req.file.path}` : null;
+        const document = req.file ? `${req.file.filename}` : null;
         const { id_emp } = req.body;
         const insurance = await request.insuranceRequest(id_emp, document);
         res.status(200).json({ insurance });
@@ -85,7 +85,7 @@ const deleteRequest = async (req, res) => {
     try {
         const deleteRequest = await request.findByIdAndDelete({ _id: id });
         if (deleteRequest && deleteRequest.requestType === "Insurance Reimbursement") {
-            await fs.unlink(deleteRequest.document);
+            await fs.unlink(`../files/` + `${deleteRequest.document}`);
         }
         if (!deleteRequest) {
             res.status(404).json({ message: "Request not found" });
@@ -269,7 +269,7 @@ const cancelRequest = async (req, res) => {
 };
 // Validate payslip request
 const validatePayslipRequest = async (req, res) => {
-    const document = req.file ? `${req.file.path}` : null;
+    const document = req.file ? `${req.file.filename}` : null;
     const { userType } = req.body;
     const status = userType == "Admin" ? "Validated" : "In progress: Validated by the head department";
     const { id } = req.params;

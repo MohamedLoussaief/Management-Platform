@@ -8,39 +8,6 @@ dotenv.config({ path: '../.env' })
 
 
 
-// creating token
-const createToken= (_id: string, firstName:string, lastName:string, userType:string)=>{
-
-return jwt.sign({_id, firstName, lastName, userType}, process.env.SECRET as string, {expiresIn:'3d'})
-
-} 
-
-
-
-// login user
-const loginUser = async(req:Request, res:Response)=>{
-
-
-const {email, password} = req.body
-
-try{
-
-const user = await User.login(email, password)
-
-//create token
-const token = createToken(user._id, user.firstName, user.lastName, user.userType)
-
-res.status(200).json({token}); 
-
-}catch(error:any){
-
-res.status(400).json({error: error.message})
-
-}
-
-
-}
-
 
 // Add Employee
 const addEmp = async(req:Request, res:Response)=>{
@@ -170,5 +137,5 @@ console.error('Error updating leave balances:', error);
 
 }
 
-export {loginUser, addEmp, updateEmp, deleteEmp, getAllEmp, updateLeaveBalances}
+export {addEmp, updateEmp, deleteEmp, getAllEmp, updateLeaveBalances}
 

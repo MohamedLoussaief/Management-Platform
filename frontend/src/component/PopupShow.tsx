@@ -1,10 +1,12 @@
 import React, {ChangeEvent, FormEvent, useState} from "react";
 import useDecodedToken from "../hooks/useDecodedToken";
 import { format } from "date-fns";
+import { useDownloadDocument } from "../hooks/useDownloadDocument";
 
 
 
 interface requestInfo{
+_id:string,    
 requestType: string;
 amount: number;
 cin: string;
@@ -25,6 +27,25 @@ requestInfo:requestInfo;
 
 
 const PopupShow:React.FC<PopupShow> = ({isOpen, onClose, requestInfo})=>{
+
+const  {downloadDocument} = useDownloadDocument() 
+
+
+
+
+
+const handleDownload = async(e: React.FormEvent<HTMLFormElement>)=>{
+
+e.preventDefault()
+
+await downloadDocument(requestInfo._id)
+
+
+}
+
+
+
+
 
 
 if (!isOpen) return null  
@@ -105,7 +126,7 @@ requestInfo.requestType=="Leave"&&
 requestInfo.requestType=="Insurance Reimbursement"&&    
 <>
 <td> 
-<form>
+<form onSubmit={handleDownload}>
 <button type="submit">Download The Document</button>    
 </form>    
 </td>

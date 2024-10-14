@@ -25,16 +25,16 @@ const token = authorization.split(' ')[1]
 
 try{
 
-const {_id}= jwt.verify(token, process.env.SECRET as string) as JwtPayload
+const {_id}= jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string) as JwtPayload
 
-req.user = await User.findOne({_id}).select('userType')
+req.user = await User.findOne({_id})
 next()
 
 
 }catch(error){
 
 console.log(error)
-res.status(401).json({error:'Request is not authorized'})
+res.status(403).json({error:'Request is not authorized'})
 
 }
 

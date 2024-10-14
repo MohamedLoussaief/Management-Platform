@@ -1,11 +1,9 @@
 import {Router} from 'express'
-import {loginUser, addEmp, updateEmp, getAllEmp, deleteEmp} from '../controllers/user.js'
+import {addEmp, updateEmp, getAllEmp, deleteEmp} from '../controllers/user.js'
+import {loginUser, logout, refresh} from '../controllers/auth.js' 
 import {requireAuth, requireAdmin} from "../middlewares/authMiddleware.js"
 
 const router = Router();
-
-// login route
-router.post('/login', loginUser)
 
 // require authorization 
 router.use(requireAuth)

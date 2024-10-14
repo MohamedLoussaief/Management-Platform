@@ -1,4 +1,5 @@
 import {createContext, useReducer, Dispatch, useEffect}  from 'react'
+import {useRefreshToken} from '../hooks/useRefreshToken'
 
 
 interface AuthState{
@@ -37,19 +38,29 @@ default:
 export const AuthContextProvider = ({children}:{children:React.ReactNode})=>{
 
 const [state, dispatch] = useReducer(authReducer, {user:null})
+const {refreshToken, token} = useRefreshToken()
+
+
 
 // checking if user still logged in
 useEffect(()=>{
 
-const user = JSON.parse(localStorage.getItem('user') as string)
+// refresh token at an initial render
+refreshToken()    
 
-if(user){
+// refreshing token every 15 minutes
+const refresh = setInterval(()=>{ refreshToken() }, 15*60*1000)
 
-dispatch({type:'LOGIN', payload:user})
+
+if(token){ 
+
+dispatch({type:'LOGIN', payload:{token:token}})
 
 }
 
-},[]);
+return ()=> clearInterval(refresh) 
+
+}, [token]);
 
 
 //console.log('AuthContext state: ', state)

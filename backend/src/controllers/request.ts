@@ -108,7 +108,7 @@ const insuranceRequest = async(req:Request, res:Response)=>{
 
 try{
   
-const document = req.file  ? `${req.file.path}` : null   
+const document = req.file  ? `${req.file.filename}` : null   
 
 const {id_emp} = req.body
 
@@ -158,7 +158,7 @@ const deleteRequest = await request.findByIdAndDelete({_id:id})
 
 if(deleteRequest && deleteRequest.requestType==="Insurance Reimbursement"){
 
-await fs.unlink(deleteRequest.document)
+await fs.unlink(`../files/`+`${deleteRequest.document}`)
 
 }
 
@@ -412,7 +412,7 @@ res.status(500).json({error:error.message})
 // Validate payslip request
 const validatePayslipRequest = async(req:Request, res:Response)=>{
 
-const document = req.file  ? `${req.file.path}` : null 
+const document = req.file  ? `${req.file.filename}` : null 
 
 const {userType} = req.body
 
